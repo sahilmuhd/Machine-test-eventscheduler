@@ -1,0 +1,43 @@
+{% extends 'scheduler/base.html' %}
+{% block title %}Speakers{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">All Speakers</h2>
+    <a href="{% url 'speaker_create' %}" class="btn btn-primary">+ Add New Speaker</a>
+  </div>
+
+  {% if speakers %}
+    <div class="card shadow-sm">
+      <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for speaker in speakers %}
+              <tr>
+                <td class="fw-semibold">{{ speaker.name }}</td>
+                <td>{{ speaker.email }}</td>
+                <td>{{ speaker.phone }}</td>
+                <td>
+                  <a href="{% url 'speaker_update' speaker.pk %}" class="btn btn-sm btn-outline-warning">Edit</a>
+                  <a href="{% url 'speaker_delete' speaker.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {% else %}
+    <div class="alert alert-info">No speakers found.</div>
+  {% endif %}
+</div>
+{% endblock %}

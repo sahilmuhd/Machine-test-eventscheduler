@@ -1,0 +1,28 @@
+{% extends 'scheduler/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Optimized Schedule</h2>
+
+  {% for event in events %}
+    <div class="card mb-4">
+      <div class="card-header bg-dark text-white">
+        <strong>{{ event.title }}</strong> — {{ event.date|date:"F j, Y" }} — {{ event.location }}
+      </div>
+
+      {% if event.sessions.all %}
+        <ul class="list-group list-group-flush">
+          {% for session in event.sessions.all %}
+            <li class="list-group-item">
+              <strong>{{ session.title }}</strong><br>
+              {{ session.start_time|date:"F j, Y, g:i a" }} – {{ session.end_time|date:"F j, Y, g:i a" }}<br>
+              Speaker: {{ session.speaker.name }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="p-3 text-muted">No sessions scheduled.</div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

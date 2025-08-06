@@ -1,0 +1,47 @@
+{% extends 'scheduler/base.html' %}
+{% block title %}Sessions{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">All Sessions</h2>
+    <a href="{% url 'session_create' %}" class="btn btn-primary">+ Create New Session</a>
+  </div>
+
+  {% if sessions %}
+    <div class="card shadow-sm">
+      <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Event</th>
+              <th scope="col">Speaker</th>
+              <th scope="col">Start</th>
+              <th scope="col">End</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for session in sessions %}
+              <tr>
+                <td>{{ session.title }}</td>
+                <td>{{ session.event.title }}</td>
+                <td>{{ session.speaker.name }}</td>
+                <td>{{ session.start_time|date:"d M Y, H:i" }}</td>
+                <td>{{ session.end_time|date:"d M Y, H:i" }}</td>
+                <td>
+                  <a href="{% url 'session_update' session.pk %}" class="btn btn-sm btn-outline-warning">Edit</a>
+                  <a href="{% url 'session_delete' session.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {% else %}
+    <div class="alert alert-info">No sessions available.</div>
+  {% endif %}
+</div>
+{% endblock %}
